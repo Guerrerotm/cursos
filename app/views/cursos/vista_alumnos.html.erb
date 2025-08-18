@@ -1,0 +1,51 @@
+
+
+<%# app/views/cursos/cursos_alumnos.html.erb %>
+
+<!-- Título del curso -->
+<%# Asegúrate de que el nombre del atributo (@curso.titulo) coincida con el nombre de tu columna en la base de datos. %>
+<h1><%= @curso.title %></h1>
+
+<!-- Notificación -->
+<p class="alert alert-success text-center" style="font-family: 'Dancing Script', cursive; font-size: 24px;">
+  <%= notice %>
+</p>
+
+<!-- Contenido principal con diseño de dos columnas -->
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Columna Izquierda: Índice de Contenido -->
+    <% toc, curso_body_with_ids = generate_table_of_contents(@curso.body) %>
+    <%# Se ha añadido la clase "sticky-top" para hacerlo flotante %>
+    <div class="col-md-4 mb-4 sticky-top">
+      <div class="card bg-light">
+        <div class="card-header">
+          <strong>Índice de Contenido</strong>
+        </div>
+        <div class="card-body">
+          <%# Llamada al helper para generar el índice %>
+          <% toc, curso_body = generate_table_of_contents(@curso.body) %>
+          <%= toc %>
+        </div>
+      </div>
+    </div>
+    
+ <div class="col-md-8" style="position: relative;">
+ 
+  <div class="card mb-3" style="font-family: Arial, sans-serif;">
+    <div class="card-body">
+      <h4 class="card-title">Contenido del Curso</h4>
+      <p class="card-text"><strong></strong></p>
+      <div class="curso-content" style="height: 500px; overflow-y: auto;">
+        <%# Mostrar el contenido del curso con los IDs para los enlaces %>
+        <%= curso_body_with_ids %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<!-- Botones -->
+<div class="d-flex gap-2 flex-wrap mt-3">
+  <%= link_to "📚 Volver a cursos", alumnos_path, class: "btn btn-secondary" %>
+</div>

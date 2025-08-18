@@ -1,0 +1,25 @@
+<% content_for :title, "Editing curso" %>
+
+<!-- Fuente manuscrita de Google Fonts -->
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+
+<!-- Título con letra manuscrita -->
+<h1 class="text-center my-4" style="font-family: 'arial', cursive; font-size: 40px;">
+  ✏️ Editando el Curso
+</h1>
+
+<!-- Formulario -->
+<div class="card p-4 mb-4" style="font-family: 'arial', cursive;">
+  <%= render "form", curso: @curso %>
+</div>
+
+<!-- Botones de navegación -->
+<div class="d-flex gap-2" style="font-family: 'arial', cursive;">
+  <%= link_to "👁️ Ver este curso", @curso, class: "btn btn-info" %>
+  <%= link_to "📚 Volver a cursos", cursos_path, class: "btn btn-secondary" %>
+</div>
+
+
+

@@ -1,0 +1,26 @@
+
+  
+
+
+
+
+<!-- Notificación -->
+<p class="alert alert-success text-center" style="font-family: 'Dancing Script', cursive; font-size: 24px;">
+  <%= notice %>
+</p>
+
+<!-- Contenido del curso -->
+<div class="card mb-3" style="font-family: Arial, sans-serif;">
+  <div class="card-body">
+    <h4 class="card-title">Contenido del Curso</h4>
+    <p class="card-text"><strong></strong></p>
+    <p class="card-text"><%= raw @curso.body %></p>
+  </div>
+</div>
+
+<!-- Botones -->
+<div class="d-flex gap-2 flex-wrap mt-3">
+  <%= link_to "✏️ Editar este curso", edit_curso_path(@curso), class: "btn btn-primary" %>
+  <%= link_to "📚 Volver a cursos", cursos_path, class: "btn btn-secondary" %>
+  <%= button_to "🗑️ Eliminar este curso", @curso, method: :delete, data: { confirm: "¿Estás seguro que deseas eliminarlo?" }, class: "btn btn-danger" %>
+</div>

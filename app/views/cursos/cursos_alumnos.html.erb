@@ -1,0 +1,47 @@
+<!-- Hero 5 - Bootstrap Brain Component -->
+<section class="bsb-hero-5 px-3  bsb-overlay" style="background-image: url('<%= asset_path('banner.jpg') %>');">
+  <div class="container h-50">
+    <div class="row justify-content-md-center align-items-center">
+      <div class="col-12 col-md-11 col-lg-9 col-xl-8 col-xxl-7">
+        <h2 class="display-1 text-white text-center fw-bold mb-4">GUIAS</h2>
+        <p class="lead text-white text-center mb-5 d-flex justify-content-sm-center">
+          <span class="col-12 col-sm-10 col-md-8 col-xxl-7">There are three ways to ultimate success: The first way is to be kind. The second way is to be kind. The third way is to be kind.</span>
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<p style="color: green"><%= notice %></p>
+
+
+
+
+<h1>Cursos</h1>
+
+<div class="row">
+  <% @cursos.each do |curso| %>
+    <div class="col-md-4">
+      <div class="card mb-4 box-shadow">
+        
+        <div class="card-body">
+          <h5 class="card-title"> <%= raw curso.title%> </h5>
+          
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <%= link_to 'Ver', vista_alumno_path(curso), class: "btn btn-sm btn-outline-secondary" %>
+
+              
+            </div>
+            <small class="text-muted"><%= time_ago_in_words(curso.created_at) %> atrás</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+
