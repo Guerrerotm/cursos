@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  resources :cursos
+  
+devise_for :profesors
+resources :cursos
+root "cursos#index"
   get 'vista-alumnos', to: 'cursos#vista_alumnos'
 get 'vista-alumnos/:id', to: 'cursos#vista_alumnos', as: 'vista_alumno'
 get 'cursos-alumnos', to: 'cursos#cursos_alumnos', as: 'alumnos'
-
+post 'ai/generate_course_content', to: 'ai#generate_course_content', as: :generate_course_content
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -17,5 +20,8 @@ get 'cursos-alumnos', to: 'cursos#cursos_alumnos', as: 'alumnos'
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  
+
 end
 

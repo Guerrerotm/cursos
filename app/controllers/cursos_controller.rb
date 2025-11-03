@@ -1,16 +1,21 @@
 class CursosController < ApplicationController
-  before_action :set_curso, only: %i[ show edit update destroy ]
-def cursos_alumnos
-  render layout: "layout_alumnos"
-  @cursos = Curso.all # O puedes filtrar por el alumno actual si tienes autenticación
-end
+ # Filtro para acciones de CRUD (profesores)
+  # Usamos :require_profesor definido en ApplicationController
+  before_action :require_profesor, only: [:new, :create, :edit, :update, :destroy]
 
-def vista_alumnos
-  @curso = Curso.find(params[:id])
-  render layout: "layout_alumnos"
+  # Filtro para acciones que requieren un curso específico
+  before_action :set_curso, only: %i[ show edit update destroy vista_alumnos ] # Añadí vista_alumnos aquí
 
 
-end
+  def cursos_alumnos
+    @cursos = Curso.all # O puedes filtrar por el alumno actual si tienes autenticación
+    render layout: "layout_alumnos"
+  end
+
+  def vista_alumnos
+    @curso = Curso.find(params[:id])
+    render layout: "layout_alumnos"
+  end
 
   # GET /cursos or /cursos.json
   def index
@@ -32,50 +37,54 @@ end
 
   # POST /cursos or /cursos.json
   def create
-    @curso = Curso.new(curso_params)
+    @curso = current_profesor.cursos.new(curso_params) 
 
-    respond_to do |format|
-      if @curso.save
-        format.html { redirect_to @curso, notice: "Curso was successfully created." }
-        format.json { render :show, status: :created, location: @curso }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @curso.errors, status: :unprocessable_entity }
-      end
-    end
+  respond_to do |format|
+  if @curso.save
+    format.html { redirect_to @curso, notice: "Curso creado exitosamente." }
+    format.json { render :show, status: :created, location: @curso }
+  else
+    format.html { render :new, status: :unprocessable_entity }
+    format.json { render json: @curso.errors, status: :unprocessable_entity }
   end
-
-  # PATCH/PUT /cursos/1 or /cursos/1.json
-  def update
-    respond_to do |format|
-      if @curso.update(curso_params)
-        format.html { redirect_to @curso, notice: "Curso was successfully updated." }
-        format.json { render :show, status: :ok, location: @curso }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @curso.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
+end
+end
   # DELETE /cursos/1 or /cursos/1.json
-  def destroy
+    def destroy
     @curso.destroy!
 
     respond_to do |format|
       format.html { redirect_to cursos_path, status: :see_other, notice: "Curso was successfully destroyed." }
-      format.json { head :no_content }
+      format.json { head :no_content } # <--- Sintaxis corregida para la respuesta JSON
     end
   end
 
+  def update
+  respond_to do |format|
+    if @curso.update(curso_params)
+      format.html { redirect_to @curso, notice: "Curso was successfully updated." }
+      format.json { render :show, status: :ok, location: @curso }
+    else
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @curso.errors, status: :unprocessable_entity }
+    end
+  end
+end
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_curso
-      @curso = Curso.find(params.expect(:id))
+      @curso = Curso.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def curso_params
-      params.expect(curso: [ :title, :body ])
+      params.require(:curso).permit(:title, :body)
     end
+
+ 
 end
+
+
+

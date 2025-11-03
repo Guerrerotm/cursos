@@ -1,4 +1,7 @@
+<%# app/views/cursos/_form.html.erb %>
+
 <%= form_with(model: curso) do |form| %>
+  <%# Sección para mostrar errores de validación (standard Rails) %>
   <% if curso.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(curso.errors.count, "error") %> prohibited this curso from being saved:</h2>
@@ -11,17 +14,21 @@
     </div>
   <% end %>
 
+  <%# Campo de Título %>
   <div>
     <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%# 🟢 CLAVE para la IA: El JavaScript lee este ID para obtener el título %>
+    <%= form.text_field :title, id: "course_title" %>
   </div>
 
+  <%# Campo de Contenido (Body) %>
   <div>
     <%= form.label :body, style: "display: block" %>
-  <%= form.text_area :body, id: "summernote" %>
-
+    <%# CLAVE para Summernote: El JavaScript inicializa el editor en este ID %>
+    <%= form.text_area :body, id: "summernote" %>
   </div>
 
+  <%# Botón de Envío %>
   <div>
     <%= form.submit %>
   </div>
